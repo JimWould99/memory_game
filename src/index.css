@@ -1,0 +1,15 @@
+.cardgroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 170vh;
+  gap: 30px;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-size: 10%;
+  border: 1px solid black;
+}
