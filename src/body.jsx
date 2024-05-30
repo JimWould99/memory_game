@@ -31,6 +31,11 @@ const Body = () => {
     }
   }
 
+  function shuffleData() {
+    let shuffledArray = catData.sort((a, b) => 0.5 - Math.random());
+    setCatData(shuffledArray);
+  }
+
   const handleClick = (imageID) => {
     let continueGame = addID(imageID);
 
@@ -44,6 +49,8 @@ const Body = () => {
       setClickedIDs([]);
       continueGame = true;
     }
+
+    shuffleData();
   };
 
   return (
