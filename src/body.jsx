@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
 import ScoreBoard from "./scoreBoard";
 import CardGroup from "./cardGroup";
+import useFetch from "./useFetch";
 
 const Body = () => {
-  const [catData, setCatData] = useState(null);
-  const [clickedIDs, setClickedIDs] = useState([]);
+  const {
+    data: catData,
+    isLoading,
+    error,
+  } = useFetch(
+    "https://api.thecatapi.com/v1/images/search?limit=12&api_key=live_40SlhPOkTbpzJIMhKo6FFzFignI9fouJOTXF4FIqvsWHUdvTe1u9NbZCtW7V4urb"
+  );
 
+  // 'data: catData'= change name only in that context
+
+  const [clickedIDs, setClickedIDs] = useState([]);
   const [currentScore, setCurrentScore] = useState(0);
   const [currentHighest, setCurrentHighest] = useState(0);
-
-  useEffect(() => {
-    fetch(
-      "https://api.thecatapi.com/v1/images/search?limit=12&api_key=live_40SlhPOkTbpzJIMhKo6FFzFignI9fouJOTXF4FIqvsWHUdvTe1u9NbZCtW7V4urb"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setCatData(data);
-      });
-  }, []);
 
   function addID(imageID) {
     if (clickedIDs.includes(imageID)) {
@@ -33,7 +29,6 @@ const Body = () => {
 
   function shuffleData() {
     let shuffledArray = catData.sort((a, b) => 0.5 - Math.random());
-    setCatData(shuffledArray);
   }
 
   const handleClick = (imageID) => {
@@ -60,6 +55,8 @@ const Body = () => {
         currentScore={currentScore}
         currentHighest={currentHighest}
       ></ScoreBoard>
+      {error && <h3>{error}</h3>}
+      {isLoading && <h3>Cat images loading...</h3>}
       {catData && (
         <CardGroup catData={catData} handleClick={handleClick}></CardGroup>
       )}
